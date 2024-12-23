@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'sans-serif';
+}
+
+:root {
+	--primary-text: #303f54;
+	/* Adjust for your design */
+	--primary-bg: #ffffff;
+	/* Adjust for your design */
+	--secondary-text: #1a2738;
+	/* Adjust for your design */
+	--secondary-bg: #ffffff;
+	/* Adjust for your design */
+}
+
+/* Dark mode theme */
+:root.dark {
+	--primary-text: #ffffff;
+	--primary-bg: #1a2738;
+	--secondary-text: #b5c4de;
+	--secondary-bg: #303f54;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', 'sans-serif';
+}
+
+@layer components {
+
+	.feature-page-container{
+		@apply max-w-[90%] mx-auto;
+	}
+
+	.feature-page-container h1 {
+		@apply text-center font-bold text-2xl my-8; /* Tailwind CSS utility classes */
+	}
+
+	.feature-subheading{
+		@apply text-lg mb-6 font-medium;
+		color: var(--secondary-text)
+	}
+
+	.apply-reuse-btn-row{
+		@apply flex flex-wrap gap-4
+	}
+
+	.apply-button{
+		@apply mb-5 px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-700
+	}
+
+	.reuse-button{
+		@apply mb-5 px-4 py-2 bg-white text-blue-500 rounded-lg border border-blue-500 cursor-pointer hover:bg-gray-600 hover:text-white 
+	}
+
+
+
+
+
+
+	.form-container {
+		@apply w-[90%] mx-auto my-8 flex flex-wrap;
+		background-color: var(--primary-bg);
+	}
+
+	/* Form Title Section  */
+	.form-title {
+		@apply flex flex-col;
+	}
+
+	.form-heading {
+		@apply text-2xl font-bold mb-6;
+		color: var(--primary-text);
+	}
+
+	.form-sub-heading {
+		@apply flex justify-center items-center space-x-4 text-xl font-semibold;
+		color: var(--secondary-text);
+	}
+
+	.horizontal-line {
+		@apply border-t border-gray-300 my-6;
+	}
+
+	/* Form Sections  */
+	.form-section-wrapper {
+		@apply min-w-[90%] grid md:grid-cols-3 sm:grid-cols-1 md:gap-6 sm:gap-2;
+	}
+
+	.form-section-wrapper-two {
+		@apply min-w-[90%] grid md:grid-cols-2 sm:grid-cols-1 md:gap-6 sm:gap-2;
+	}
+
+	.form-section-wrapper .form-section {
+		@apply w-[100%]
+	}
+
+	.form-section {
+		@apply mb-8;
+		background-color: var(--secondary-bg)
+	}
+
+	.title-section {
+		@apply max-w-[100%];
+	}
+
+	.form-section-content-container {
+		@apply grid md:grid-cols-2 sm:grid-cols-1 gap-6 p-6 rounded-b-[1rem];
+		background-color: var(--secondary-bg)
+	}
+
+	.form-section-wrapper .form-section .form-section-content-container {
+		@apply grid lg:grid-cols-2 md:grid-cols-1 rounded-b-[1rem];
+		background-color: var(--secondary-bg)
+	}
+
+	.form-section-content-container-single {
+		@apply grid grid-cols-1 gap-2 p-6 rounded-b-[1rem];
+		background-color: var(--secondary-bg)
+	}
+
+	.form-section-content-container-three {
+		@apply grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-2 p-6 rounded-b-[1rem];
+		background-color: var(--secondary-bg)
+	}
+
+	.form-section-content-container-four {
+		@apply grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 gap-2 p-6 rounded-b-[1rem];
+		background-color: var(--secondary-bg)
+	}
+
+	.form-section-content {
+		background-color: var(--secondary-bg)
+	}
+
+	.form-label {
+		@apply block text-sm font-medium uppercase mb-2;
+		color: var(--secondary-text);
+		background-color: var(--secondary-bg);
+	}
+
+	.form-select {
+		@apply block w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500;
+		/* Add smooth transitions */
+		@apply transition duration-200 ease-in-out;
+		color: var(--primary-text);
+	}
+
+	/* Hover state */
+	.form-select:hover {
+		@apply border-blue-500 bg-blue-50 cursor-pointer;
+		cursor: pointer;
+	}
+
+	/* Focus state */
+	.form-select:focus {
+		@apply outline-none ring-2 ring-blue-300;
+	}
+
+	/* Disabled state */
+	.form-select:disabled {
+		@apply bg-gray-100 text-gray-500 cursor-not-allowed;
+	}
+
+
+
+	/* Form Input Field  */
+	.form-input {
+		@apply w-[100%] px-4 py-2 border border-gray-300 rounded-md text-sm transition-all duration-200 ease-in-out;
+	}
+
+	.form-input:focus {
+		@apply border-blue-500 outline-none ring-2 ring-blue-200;
+	}
+
+
+	/* form checkbox group  */
+	.form-checkbox-group {
+		@apply flex gap-5 mb-5;
+	}
+
+	.form-checkbox-group .form-label {
+		@apply mb-0;
+	}
+
+
+	/* File Text-area   */
+	.text-area{
+		@apply w-full
+	}
+
+
+	/* File Upload Button  */
+	.form-file-upload-btn {
+		@apply block w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:ring focus:ring-indigo-500 focus:outline-none;
+	}
+
+
+	/* Form Section Title */
+	.form-section-title {
+		@apply relative bg-[#e0f7fa] px-3 py-2 text-lg font-semibold rounded-t-[1rem] text-left;
+	}
+
+	.form-section-title::after,
+	.form-section-title::before {
+		content: "";
+		@apply absolute left-0 w-full h-[2px] bg-[#333];
+	}
+
+	.form-section-title::after {
+		@apply bottom-1;
+	}
+
+	.form-section-title::before {
+		@apply bottom-0;
+	}
+
+	 .form-paragraph-input{
+		@apply border border-gray-300 rounded px-2 my-1 mx-2
+	 }
+
+
+
+
+	/* For modern browsers */
+	::-webkit-scrollbar {
+		width: 0;
+		/* Set width to 0 */
+		height: 0;
+		/* Set height to 0 for horizontal scrollbars */
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		/* Color of the scrollbar thumb */
+		border-radius: 4px;
+		/* Rounded corners */
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+		/* Darker color when hovered */
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		/* Background of the scrollbar track */
+		border-radius: 4px;
+		/* Match the thumb's rounded corners */
+	}
+
+
+
+
+
+
+	/* Table css designs */
+	.table-button-container {
+		@apply flex flex-wrap gap-2 mb-4
+	}
+
+	.table-button-tabs {
+		@apply flex items-center gap-2 px-4 py-2 border border-b-0 rounded-md text-sm font-medium transition
+	}
+
+	.table-input-container {
+		@apply flex items-center justify-between my-4 border rounded-lg px-2 py-1
+	}
+
+	.table-input-field {
+		@apply w-full px-2 py-1 text-sm focus:outline-none focus:ring-blue-500
+	}
+
+	.table-container {
+		@apply overflow-x-auto
+	}
+
+	.table-child-container {
+		@apply w-full bg-white table-fixed rounded-lg shadow-md overflow-hidden border-collapse border-gray-300;
+		table-layout: fixed;
+	}
+
+	.table-rows {
+		@apply bg-[#0087BE] text-white text-xs sm:text-sm
+	}
+
+	.table-heading {
+		@apply pl-3 py-2 text-left w-[22.5%] sm:w-1/4 border-b border-gray-300
+	}
+
+	.table-body {
+		@apply text-black text-xs sm:text-sm
+	}
+
+	.table-body-rows {
+		@apply transition duration-200 border-b border-gray-200 box-border
+	}
+
+	.table-body-data {
+		@apply text-left py-2 pl-3 w-[22.5%]
+	}
+
+	.table-body-data-container {
+		@apply w-[10%] flex align-middle justify-center text-xs sm:text-sm py-2;
+	}
+
+	.table-body-status {
+		@apply text-center w-full sm:w-1/2
+	}
+
+	.table-body-button-container {
+		@apply flex gap-3 w-full sm:w-2/3 justify-center sm:justify-end sm:flex-row flex-col pr-4
+	}
+
+	.table-body-data-buttons {
+		@apply bg-[#0087BE] text-white w-1/2 text-sm h-6 flex align-middle justify-center rounded-md shadow-md backdrop-blur-lg backdrop-brightness-50 hover:bg-blue-700/70 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out border border-white/20
+	}
+
+	.table-error-data {
+		@apply text-center text-gray-500 py-6 italic
+	}
+
+	.table-edit-button {
+		@apply bg-white text-[#007bbf] border-2 border-[#adebff] px-3 py-1 mx-auto rounded-md text-xs font-bold cursor-pointer transition-colors duration-300 hover:bg-[#f0faff] hover:text-[#005a8c] hover:border-[#81d7ff]
+	}
+
+}

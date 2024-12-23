@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Stepper,
@@ -8,6 +8,11 @@ import {
   LinearProgress,
   Typography,
   Button,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const steps = [
@@ -18,8 +23,9 @@ const steps = [
 ];
 
 const LoanForm = () => {
-  const [activeSections, setActiveSections] = useState([0]); // Tracks unlocked sections
+  const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
+    isExistingCustomer: "",
     name: "",
     email: "",
     phone: "",
@@ -29,38 +35,17 @@ const LoanForm = () => {
     loanPurpose: "",
   });
 
-  const totalMandatoryFields = 7; // Total number of mandatory fields
-  const completedFields = Object.values(formData).filter(
-    (value) => value.trim() !== ""
-  ).length;
-  const progressPercentage = Math.round(
-    (completedFields / totalMandatoryFields) * 100
-  );
-
-  // Function to check if a section is complete
-  const isSectionComplete = (sectionIndex) => {
-    const conditions = [
-      formData.name && formData.email && formData.phone,
-      formData.employmentStatus && formData.monthlyIncome,
-      formData.loanAmount && formData.loanPurpose,
-    ];
-    return conditions[sectionIndex];
-  };
-
-  // Unlock the next section automatically when the current section is complete
-  useEffect(() => {
-    const lastUnlockedSection = activeSections[activeSections.length - 1];
-    if (
-      isSectionComplete(lastUnlockedSection) &&
-      !activeSections.includes(lastUnlockedSection + 1)
-    ) {
-      setActiveSections((prev) => [...prev, lastUnlockedSection + 1]);
-    }
-  }, [formData, activeSections]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => prevStep - 1);
   };
 
   const handleSubmit = () => {
@@ -71,36 +56,60 @@ const LoanForm = () => {
     switch (step) {
       case 0:
         return (
-          <Box>
-            <Typography variant="h6">Personal Details</Typography>
-            <TextField
-              fullWidth
-              label="Full Name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              margin="normal"
-              required
-            />
-            <TextField
-              fullWidth
-              label="Email Address"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              margin="normal"
-              required
-            />
-            <TextField
-              fullWidth
-              label="Phone Number"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              margin="normal"
-              required
-            />
-          </Box>
+          <div className="form-section">
+            <div className="form-section-content-container-single">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Are you an existing CAS Bank Customer ?
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Are you an existing CAS Bank Customer ?"
+                  value={formData.isExistingCustomer}
+                  name="isExistingCustomer"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Yes">Yes</MenuItem>
+                  <MenuItem value="No">No</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            {formData.isExistingCustomer == "Yes" ? (
+              <div>
+                <Typography variant="h6">Personal Details</Typography>
+                <div className="form-section-content-container pt-0">
+                  <TextField
+                    fullWidth
+                    label="Full Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    margin="normal"
+                    required
+                  />
+                  <TextField
+                    fullWidth
+                    label="Email Address"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    margin="normal"
+                    required
+                  />
+                  <TextField
+                    fullWidth
+                    label="Phone Number"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    margin="normal"
+                    required
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
         );
       case 1:
         return (
@@ -170,43 +179,135 @@ const LoanForm = () => {
     }
   };
 
+  const completionPercentage = ((activeStep + 1) / steps.length) * 100;
+
   return (
-    <Box sx={{ display: "flex", width: "80%", margin: "auto", mt: 5 }}>
-      {/* Vertical Stepper */}
-      <Box sx={{ width: "25%" }}>
-        <Stepper
-          activeStep={activeSections[activeSections.length - 1]}
-          orientation="vertical"
-        >
+    // <Grid container spacing={2} sx={{ width: "90%", margin: "auto" }}>
+    //   {/* Left Side Stepper */}
+    //   <Grid
+    //     item
+    //     sm={3}
+    //     sx={{
+    //       position: "sticky",
+    //       top: 0,
+    //       alignSelf: "flex-start",
+    //       zIndex: 1000,
+    //       background: "#fff",
+    //     }}
+    //   >
+    //     <Stepper orientation="vertical" activeStep={activeStep}>
+    //       {steps.map((label, index) => (
+    //         <Step key={label}>
+    //           <StepLabel>{label}</StepLabel>
+    //         </Step>
+    //       ))}
+    //     </Stepper>
+    //   </Grid>
+
+    //   {/* Right Side Content */}
+    //   <Grid item sm={9}>
+    //     {/* Progress Bar  */}
+    //     <Box
+    //       sx={{
+    //         position: "sticky",
+    //         top: 0,
+    //         zIndex: 1000,
+    //         background: "#fff",
+    //         pb: 1,
+    //       }}
+    //     >
+    //       <LinearProgress
+    //         variant="determinate"
+    //         value={completionPercentage}
+    //         sx={{ mb: 2, height: 10 }} // Set the height to 8px
+    //       />
+    //       <Typography variant="body2" color="textSecondary" align="right">
+    //         {Math.round(completionPercentage)}%
+    //       </Typography>
+    //     </Box>
+
+    //     {/* Form Sections  */}
+    //     {[...Array(activeStep + 1).keys()].map((step) => (
+    //       <Box key={step} sx={{ mb: 4 }}>
+    //         {renderStepContent(step)}
+    //       </Box>
+    //     ))}
+
+    //     {/* Form Buttons  */}
+    //     <Box sx={{ mt: 4, display: "flex", justifyContent: "space-between" }}>
+    //       <Button
+    //         variant="outlined"
+    //         disabled={activeStep === 0}
+    //         onClick={handleBack}
+    //       >
+    //         Back
+    //       </Button>
+    //       {activeStep < steps.length - 1 ? (
+    //         <Button variant="contained" onClick={handleNext}>
+    //           Next
+    //         </Button>
+    //       ) : (
+    //         <Button variant="contained" color="primary" onClick={handleSubmit}>
+    //           Submit
+    //         </Button>
+    //       )}
+    //     </Box>
+    //   </Grid>
+    // </Grid>
+    <div className="form-container">
+      {/* Left Side Stepper */}
+      <div className="sm:w-1/4 w-full mt-6 sticky top-0 z-10 bg-white">
+        <Stepper orientation="vertical" activeStep={activeStep}>
           {steps.map((label, index) => (
-            <Step key={label} completed={activeSections.includes(index)}>
+            <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
-      </Box>
+      </div>
 
-      {/* Form and Progress */}
-      <Box sx={{ width: "75%", pl: 4 }}>
-        <LinearProgress
-          variant="determinate"
-          value={progressPercentage}
-          sx={{ mb: 2 }}
-        />
-        {activeSections.map((section) => (
-          <Box key={section} sx={{ mb: 4 }}>
-            {renderStepContent(section)}
-          </Box>
+      {/* Right Side Content */}
+      <div className="sm:w-3/4 w-full">
+        {/* Progress Bar */}
+        <div className="sticky top-0 z-10 bg-white pb-1 mb-2">
+          <LinearProgress
+            variant="determinate"
+            value={completionPercentage}
+            sx={{ mb: 2, height: "16px" }} // Adjust the height here
+          />
+          <Typography variant="body2" color="textSecondary" align="right">
+            {Math.round(completionPercentage)}%
+          </Typography>
+        </div>
+
+        {/* Form Sections */}
+        {[...Array(activeStep + 1).keys()].map((step) => (
+          <div key={step} className="mb-4">
+            {renderStepContent(step)}
+          </div>
         ))}
-        {activeSections.length === steps.length && (
-          <Box sx={{ textAlign: "center", mt: 4 }}>
+
+        {/* Form Buttons */}
+        <div className="mt-4 flex justify-between">
+          <Button
+            variant="outlined"
+            disabled={activeStep === 0}
+            onClick={handleBack}
+          >
+            Back
+          </Button>
+          {activeStep < steps.length - 1 ? (
+            <Button variant="contained" onClick={handleNext}>
+              Next
+            </Button>
+          ) : (
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Submit
             </Button>
-          </Box>
-        )}
-      </Box>
-    </Box>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

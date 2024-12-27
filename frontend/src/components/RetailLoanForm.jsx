@@ -24,7 +24,7 @@ const steps = [
   "Confirmation",
 ];
 
-const LoanForm = () => {
+const RetailLoanForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -53,20 +53,23 @@ const LoanForm = () => {
 
   useEffect(() => {
     const handleFetchTable = async () => {
-      const fetchRetailTableData =
-        "http://192.168.10.3/api/method/online_lc.api.fetch_retail_table_data";
-      const authorizationToken = import.meta.env.VITE_API_KEY;
+      const home = "ashaya.com:8000";
+      const office = "192.168.10.3";
+
+      const fetchRetailTableData = `http://${home}/api/method/onlinelc.api.fetch_retail_table_data`;
+      const authorizationToken = "fe850d916626397:77854dc086219ac";
+      const fetchRetailLoan = `http://ashaya.com:8000/api/resource/Retail Loan?fields=["*"]`;
 
       try {
-        const response = await fetch(fetchRetailTableData, {
-          method: "POST",
+        document.cookie =
+          "sid=a7a8133df3cbfb0084024e45cc363db40c93f40506d6c4b3d26326db";
+
+        const response = await fetch(fetchRetailLoan, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: authorizationToken,
+            Cookie: `sid=a7a8133df3cbfb0084024e45cc363db40c93f40506d6c4b3d26326db; system_user=yes; full_name=Administrator; user_id=Administrator`,
           },
-          body: JSON.stringify({
-            limit: 50,
-          }),
         });
 
         if (!response.ok) {
@@ -77,7 +80,7 @@ const LoanForm = () => {
         const filteredData = (data.message.data || []).map((item) => ({
           loan_amount: item.loan_amount,
           loan_tenure: item.loan_tenure,
-          product_name: item.product_name,
+          interest_rate: item.interest_rate,
           product_type: item.product_type,
           purpose_of_loan: item.purpose_of_loan,
         }));
@@ -198,6 +201,7 @@ const LoanForm = () => {
             ) : null}
           </div>
         );
+
       case 1:
         return (
           <div className="form-section">
@@ -224,6 +228,7 @@ const LoanForm = () => {
             </div>
           </div>
         );
+
       case 2:
         return (
           <div className="form-section">
@@ -271,6 +276,7 @@ const LoanForm = () => {
                             <FormControl fullWidth margin="normal">
                               <InputLabel>{label.trim()}</InputLabel>
                               <Select
+                                label={label}
                                 name={fieldKey}
                                 value={loanData[fieldKey] || ""} // Default to empty string if undefined
                                 onChange={handleDataChange}
@@ -316,6 +322,7 @@ const LoanForm = () => {
             )}
           </div>
         );
+
       case 3:
         return (
           <Box>
@@ -401,4 +408,4 @@ const LoanForm = () => {
   );
 };
 
-export default LoanForm;
+export default RetailLoanForm;

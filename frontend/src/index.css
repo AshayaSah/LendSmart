@@ -11,24 +11,20 @@
   font-family: "Poppins", "sans-serif";
 }
 
-:root {
+/* :root {
   --primary-text: #303f54;
-  /* Adjust for your design */
   --primary-bg: #ffffff;
-  /* Adjust for your design */
   --secondary-text: #1a2738;
-  /* Adjust for your design */
   --secondary-bg: #ffffff;
-  /* Adjust for your design */
 }
 
-/* Dark mode theme */
+
 :root.dark {
   --primary-text: #ffffff;
   --primary-bg: #1a2738;
   --secondary-text: #b5c4de;
   --secondary-bg: #303f54;
-}
+} */
 
 * {
   margin: 0;
@@ -102,7 +98,7 @@
 
   .form-section {
     @apply mb-8;
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-bg);
   }
 
   .title-section {
@@ -111,7 +107,7 @@
 
   .form-section-content-container {
     @apply grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-2 p-0 rounded-b-[1rem];
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-bg);
   }
 
   .form-section-wrapper .form-section .form-section-content-container {
@@ -135,7 +131,7 @@
   }
 
   .form-section-content {
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-bg);
   }
 
   .form-label {
